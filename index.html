@@ -1,51 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="src/style.css">
+    <title>Todo List App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
 
-    <link rel="stylesheet" href=link rel=" preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,600&family=Poppins:wght@300;400;600;700;800&display=swap"
-        rel="stylesheet">
+        #todoList {
+            max-width: 400px;
+            margin: 20px auto;
+        }
 
-    <title>Portfolio</title>
+        #taskInput {
+            width: 70%;
+            padding: 8px;
+        }
+
+        #addTaskBtn {
+            width: 25%;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .taskItem {
+            margin: 8px 0;
+            padding: 8px;
+            background-color:red;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .deleteTaskBtn {
+            background-color: #ff6666;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+    </style>
 </head>
-
 <body>
-    <Section class="hero">
 
-        <nav>
-            <img class="logo" src="src/images/akuna.jpg" alt="">
-            <ul>
-                <li>About me</li>
-                <li>Projects</li>
-                <li>Contacts</li>
-            </ul>
+<div id="todoList">
+    <h2>Todo List</h2>
+    <div>
+        <input type="text" id="taskInput" placeholder="Add a new task...">
+        <button id="addTaskBtn">Add</button>
+    </div>
+    <ul id="tasksList"></ul>
+</div>
 
-        </nav>
-        <div class="hero-area">
-            <div class="hero-text">
-                <h1>Aizhan Nishambaeva</h1>
-                <p>Frontend Developer</p>
-                <div class="button">About me</div>
-            </div>
-            <div class="socials">
-                <div>TW</div>
-                <div>LN</div>
-                <div>GH</div>
-            </div>
-        </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const taskInput = document.getElementById('taskInput');
+        const addTaskBtn = document.getElementById('addTaskBtn');
+        const tasksList = document.getElementById('tasksList');
 
-    </Section>
-    <Section></Section>
-    <Section></Section>
-    <footer></footer>
-    <script src="src/app.js"></script>
+        addTaskBtn.addEventListener('click', addTask);
+
+        function addTask() {
+            const taskText = taskInput.value.trim();
+
+            if (taskText !== '') {
+                const taskItem = document.createElement('li');
+                taskItem.className = 'taskItem';
+                taskItem.innerHTML = `
+                    <span>${taskText}</span>
+                    <button class="deleteTaskBtn">Delete</button>
+                `;
+
+                const deleteTaskBtn = taskItem.querySelector('.deleteTaskBtn');
+                deleteTaskBtn.addEventListener('click', function () {
+                    tasksList.removeChild(taskItem);
+                });
+
+                tasksList.appendChild(taskItem);
+                taskInput.value = '';
+            }
+        }
+    });
+</script>
+
 </body>
-
 </html>
