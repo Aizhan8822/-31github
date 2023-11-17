@@ -3,88 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo List App</title>
+    <title>Простой Чат-Бот</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        #todoList {
-            max-width: 400px;
-            margin: 20px auto;
-        }
-
-        #taskInput {
-            width: 70%;
-            padding: 8px;
-        }
-
-        #addTaskBtn {
-            width: 25%;
-            padding: 8px;
-            cursor: pointer;
-        }
-
-        .taskItem {
-            margin: 8px 0;
-            padding: 8px;
-            background-color:red;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .deleteTaskBtn {
-            background-color: #ff6666;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 3px;
+        #chatbox {
+            width: 300px;
+            height: 400px;
+            border: 1px solid #ccc;
+            overflow: auto;
         }
     </style>
 </head>
 <body>
 
-<div id="todoList">
-    <h2>Todo List</h2>
-    <div>
-        <input type="text" id="taskInput" placeholder="Add a new task...">
-        <button id="addTaskBtn">Add</button>
-    </div>
-    <ul id="tasksList"></ul>
-</div>
+<div id="chatbox"></div>
+<input type="text" id="userInput" placeholder="Введите ваш вопрос...">
+<button onclick="sendMessage()">Отправить</button>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const taskInput = document.getElementById('taskInput');
-        const addTaskBtn = document.getElementById('addTaskBtn');
-        const tasksList = document.getElementById('tasksList');
+    // Простой объект для хранения ответов чат-бота
+    const botResponses = {
+        "привет": "Привет! Как я могу вам помочь?",
+        "как дела": "У меня всё отлично, спасибо за спрос. Как у вас?",
+        "пока": "До свидания! Если у вас будут еще вопросы, спрашивайте."
+    };
 
-        addTaskBtn.addEventListener('click', addTask);
+    // Функция для отправки сообщения в чат
+    function sendMessage() {
+        const userInput = document.getElementById("userInput").value;
+        const chatbox = document.getElementById("chatbox");
 
-        function addTask() {
-            const taskText = taskInput.value.trim();
+        // Отобразить сообщение пользователя в чате
+        chatbox.innerHTML += `<p><strong>Вы:</strong> ${userInput}</p>`;
 
-            if (taskText !== '') {
-                const taskItem = document.createElement('li');
-                taskItem.className = 'taskItem';
-                taskItem.innerHTML = `
-                    <span>${taskText}</span>
-                    <button class="deleteTaskBtn">Delete</button>
-                `;
+        // Получить ответ от чат-бота
+        const botResponse = botResponses[userInput.toLowerCase()] || "Извините, я не понимаю ваш вопрос.";
 
-                const deleteTaskBtn = taskItem.querySelector('.deleteTaskBtn');
-                deleteTaskBtn.addEventListener('click', function () {
-                    tasksList.removeChild(taskItem);
-                });
+        // Отобразить ответ чат-бота в чате
+        chatbox.innerHTML += `<p><strong>Чат-бот:</strong> ${botResponse}</p>`;
 
-                tasksList.appendChild(taskItem);
-                taskInput.value = '';
-            }
-        }
-    });
+        // Очистить поле ввода
+        document.getElementById("userInput").value = "";
+        
+        // Прокрутить чат вниз, чтобы видеть последние сообщения
+        chatbox.scrollTop = chatbox.scrollHeight;
+    }
 </script>
 
 </body>
