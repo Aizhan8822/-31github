@@ -1,90 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Your Name - Portfolio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    .heart {
+      width: 100px;
+      height: 90px;
+      background-color: #e44d26;
+      position: relative;
+      transform: rotate(-45deg);
+      animation: pulse 1s infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      width: 100px;
+      height: 90px;
+      background-color: #e44d26;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .heart::before {
+      top: -45px;
+      left: 0;
+    }
+
+    .heart::after {
+      top: 0;
+      left: 45px;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Your Name</h1>
-        <p>Web Developer</p>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#about">About Me</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Write a brief introduction about yourself here.</p>
-    </section>
-    <section id="projects">
-        <h2>Projects</h2>body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        
-        header {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1em 0;
-        }
-        
-        nav {
-            background-color: #444;
-            color: #fff;
-            padding: 0.5em 0;
-        }
-        
-        nav ul {
-            list-style: none;
-            text-align: center;
-        }
-        
-        nav ul li {
-            display: inline;
-            margin: 0 1em;
-        }
-        
-        section {
-            padding: 2em;
-        }
-        
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1em 0;
-        }
-        JavaScript (script.js):
-        
-        javascript
-        Copy code
-        // You can add interactivity or dynamic content using JavaScript
-        // For example, a simple console log statement:
-        console.log('Portfolio website loaded!');
-        <div class="project">
-            <img src="project1.jpg" alt="Project 1">
-            <h3>Project 1</h3>
-            <p>Description of Project 1.</p>
-        </div>
-        <!-- Add more project sections as needed -->
-    </section>
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>Email: your.email@example.com</p>
-        <p>LinkedIn: linkedin.com/yourprofile</p>
-        <!-- Add more contact information as needed -->
-    </section>
-    <footer>
-        <p>&copy; 2023 Your Name. All rights reserved.</p>
-    </footer>
-    <script src="script.js"></script>
+  <div class="heart"></div>
 </body>
 </html>
