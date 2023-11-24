@@ -3,59 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Chat App</title>
   <style>
     body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      font-family: Arial, sans-serif;
       margin: 0;
-      background-color: #f0f0f0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    .heart {
-      width: 100px;
-      height: 90px;
-      background-color: #e44d26;
-      position: relative;
-      transform: rotate(-45deg);
-      animation: pulse 1s infinite;
+    #chat-box {
+      height: 400px;
+      overflow-y: scroll;
+      border: 1px solid #ccc;
+      padding: 10px;
     }
 
-    .heart::before,
-    .heart::after {
-      content: "";
-      width: 100px;
-      height: 90px;
-      background-color: #e44d26;
-      border-radius: 50%;
-      position: absolute;
+    #input-box {
+      display: flex;
+      margin-top: 10px;
     }
 
-    .heart::before {
-      top: -45px;
-      left: 0;
+    #message-input {
+      flex: 1;
+      padding: 5px;
     }
 
-    .heart::after {
-      top: 0;
-      left: 45px;
-    }
-
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.2);
-      }
-      100% {
-        transform: scale(1);
-      }
+    #send-button {
+      padding: 5px;
+      margin-left: 5px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="heart"></div>
+
+<div id="chat-box"></div>
+<div id="input-box">
+  <input type="text" id="message-input" placeholder="Type a message...">
+  <button id="send-button" onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+  function sendMessage() {
+    const messageInput = document.getElementById('message-input');
+    const message = messageInput.value;
+
+    if (message.trim() !== '') {
+      const chatBox = document.getElementById('chat-box');
+      const messageElement = document.createElement('div');
+      messageElement.textContent = message;
+      chatBox.appendChild(messageElement);
+
+      // Clear the input field
+      messageInput.value = '';
+
+      // Scroll to the bottom of the chat box
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  }
+</script>
+
 </body>
 </html>
