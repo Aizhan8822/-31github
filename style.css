@@ -2,45 +2,44 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-}
-
-header {
+    background-color: #f8f8f8;
+  }
+  
+  header {
+    text-align: center;
     background-color: #333;
     color: #fff;
+    padding: 20px;
+  }
+  
+  header h1 {
+    margin: 0;
+  }
+  
+  section {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+  
+  .book {
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
     text-align: center;
-    padding: 1em 0;
-}
-
-nav {
-    background-color: #444;
-    color: #fff;
-    padding: 0.5em 0;
-}
-
-nav ul {
-    list-style: none;
+  }
+  
+  .book img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+  footer {
     text-align: center;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 1em;
-}
-
-section {
-    padding: 2em;
-}
-
-footer {
+    padding: 10px;
     background-color: #333;
     color: #fff;
-    text-align: center;
-    padding: 1em 0;
-}
-
-
-/* javascript
-Copy code
-// You can add interactivity or dynamic content using JavaScript
-// For example, a simple console log statement:
-console.log('Portfolio website loaded!'); */
+  }
