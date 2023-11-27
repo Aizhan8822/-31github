@@ -1,122 +1,87 @@
+Copy code
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shop</title>
+  <title>Welcome </title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-    }
-
-    header {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 10px;
-    }
-
-    main {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      padding: 20px;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #222;
+      color: #fff;
     }
 
-    .product {
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      overflow: hidden;
-      margin: 10px;
-      width: 200px;
-      background-color: white;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    .firework {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #ffcc00;
+      border-radius: 50%;
+      animation: explode 1s ease-out forwards;
     }
 
-    .product img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-    }
-
-    .product-info {
-      padding: 10px;
-    }
-
-    button {
-      display: block;
-      width: 100%;
-      padding: 8px;
-      background-color: #333;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #555;
+    @keyframes explode {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(10);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
+  <div id="welcome" class="welcome-animation">Welcome</div>
 
-<header>
-  <h1>Simple Shop</h1>
-</header>
+  <script>
+    const welcomeElement = document.getElementById('welcome');
+    const text = welcomeElement.textContent;
 
-<main id="product-list"></main>
+    welcomeElement.textContent = ''; // Очищаем текстовое содержимое
 
-<script>
-  // Пример данных о продуктах (в реальном проекте данные обычно приходят с сервера)
-  const productsData = [
-    { id: 1, name: 'Product 1', price: 20, image: 'https://placekitten.com/200/150' },
-    { id: 2, name: 'Product 2', price: 30, image: 'https://placekitten.com/201/150' },
-    { id: 3, name: 'Product 3', price: 25, image: 'https://placekitten.com/202/150' },
-  ];
+    for (let i = 0; i < text.length; i++) {
+      const span = document.createElement('span');
+      span.textContent = text[i];
+      span.style.color = getRandomColor();
+      span.style.animation = `fadeIn 1s ${i * 0.2}s ease-out forwards`;
+      welcomeElement.appendChild(span);
+    }
 
-  const productListElement = document.getElementById('product-list');
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+  </script>
 
-  // Функция для отображения продуктов
-  function renderProducts(products) {
-    productListElement.innerHTML = '';
+  <script>
+    // Добавим фейерверк после окончания анимации Welcome
+    const welcomeAnimationDuration = 1000 * text.length * 0.2; // 1s for each letter
 
-    products.forEach(product => {
-      const productElement = document.createElement('div');
-      productElement.className = 'product';
+    setTimeout(() => {
+      createFirework();
+    }, welcomeAnimationDuration);
 
-      const imageElement = document.createElement('img');
-      imageElement.src = product.image;
-
-      const productInfoElement = document.createElement('div');
-      productInfoElement.className = 'product-info';
-      productInfoElement.innerHTML = `
-        <h3>${product.name}</h3>
-        <p>$${product.price}</p>
-      `;
-
-      const buyButton = document.createElement('button');
-      buyButton.textContent = 'Buy';
-      buyButton.addEventListener('click', () => addToCart(product));
-
-      productElement.appendChild(imageElement);
-      productElement.appendChild(productInfoElement);
-      productElement.appendChild(buyButton);
-
-      productListElement.appendChild(productElement);
-    });
-  }
-
-  // Функция для добавления продукта в корзину (в реальном проекте это будет взаимодействие с сервером)
-  function addToCart(product) {
-    alert(`Added ${product.name} to the cart!`);
-  }
-
-  // Инициализация отображения продуктов при загрузке страницы
-  renderProducts(productsData);
-</script>
-
+    function createFirework() {
+      for (let i = 0; i < 30; i++) {
+        const firework = document.createElement('div');
+        firework.className = 'firework';
+        firework.style.left = Math.random() * window.innerWidth + 'px';
+        firework.style.top = Math.random() * window.innerHeight + 'px';
+        document.body.appendChild(firework);
+      }
+    }
+  </script>
 </body>
 </html>
