@@ -1,87 +1,55 @@
-Copy code
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome </title>
+  <title>Colorful Spiral Animation</title>
   <style>
     body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #222;
-      color: #fff;
+      overflow: hidden;
     }
 
-    .firework {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background-color: #ffcc00;
-      border-radius: 50%;
-      animation: explode 1s ease-out forwards;
-    }
-
-    @keyframes explode {
-      0% {
-        transform: scale(0);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(10);
-        opacity: 0;
-      }
+    canvas {
+      display: block;
     }
   </style>
 </head>
 <body>
-  <div id="welcome" class="welcome-animation">Welcome</div>
+  <canvas id="spiralCanvas"></canvas>
 
   <script>
-    const welcomeElement = document.getElementById('welcome');
-    const text = welcomeElement.textContent;
+    const canvas = document.getElementById('spiralCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    let angle = 0;
+    let radius = 10;
+    let colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
 
-    welcomeElement.textContent = ''; // Очищаем текстовое содержимое
+    function drawSpiral() {
+      const x = canvas.width / 2 + radius * Math.cos(angle);
+      const y = canvas.height / 2 + radius * Math.sin(angle);
 
-    for (let i = 0; i < text.length; i++) {
-      const span = document.createElement('span');
-      span.textContent = text[i];
-      span.style.color = getRandomColor();
-      span.style.animation = `fadeIn 1s ${i * 0.2}s ease-out forwards`;
-      welcomeElement.appendChild(span);
+      ctx.beginPath();
+      ctx.arc(x, y, 2, 0, 2 * Math.PI, false);
+      ctx.fillStyle = colors[Math.floor(angle / (Math.PI / 3)) % colors.length];
+      ctx.fill();
+
+      angle += 0.02;
+      radius += 0.1;
+
+      requestAnimationFrame(drawSpiral);
     }
 
-    function getRandomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
-  </script>
 
-  <script>
-    // Добавим фейерверк после окончания анимации Welcome
-    const welcomeAnimationDuration = 1000 * text.length * 0.2; // 1s for each letter
+    window.addEventListener('resize', resizeCanvas);
 
-    setTimeout(() => {
-      createFirework();
-    }, welcomeAnimationDuration);
-
-    function createFirework() {
-      for (let i = 0; i < 30; i++) {
-        const firework = document.createElement('div');
-        firework.className = 'firework';
-        firework.style.left = Math.random() * window.innerWidth + 'px';
-        firework.style.top = Math.random() * window.innerHeight + 'px';
-        document.body.appendChild(firework);
-      }
-    }
+    resizeCanvas();
+    drawSpiral();
   </script>
 </body>
 </html>
