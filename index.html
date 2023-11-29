@@ -3,53 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Colorful Spiral Animation</title>
+  <title>Cosmetics Store</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
       margin: 0;
-      overflow: hidden;
+      padding: 0;
+      background-color: #f8f8f8;
     }
 
-    canvas {
-      display: block;
+    header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1em;
+    }
+
+    section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 2em;
+    }
+
+    .product {
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin: 1em;
+      padding: 1em;
+      text-align: center;
+    }
+
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1em;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
     }
   </style>
 </head>
 <body>
-  <canvas id="spiralCanvas"></canvas>
+
+  <header>
+    <h1>Cosmetics Store</h1>
+  </header>
+
+  <section id="products">
+    <div class="product">
+      <img src="product1.jpg" alt="Product 1">
+      <h2>Lipstick</h2>
+      <p>High-quality lipstick for a vibrant look.</p>
+      <button onclick="addToCart('Lipstick', 15.99)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="product2.jpg" alt="Product 2">
+      <h2>Mascara</h2>
+      <p>Volume-boosting mascara for stunning lashes.</p>
+      <button onclick="addToCart('Mascara', 12.99)">Add to Cart</button>
+    </div>
+
+    <!-- Add more product divs as needed -->
+  </section>
+
+  <footer>
+    <p>&copy; 2023 Cosmetics Store</p>
+  </footer>
 
   <script>
-    const canvas = document.getElementById('spiralCanvas');
-    const ctx = canvas.getContext('2d');
-    
-    let angle = 0;
-    let radius = 10;
-    let colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
-
-    function drawSpiral() {
-      const x = canvas.width / 2 + radius * Math.cos(angle);
-      const y = canvas.height / 2 + radius * Math.sin(angle);
-
-      ctx.beginPath();
-      ctx.arc(x, y, 2, 0, 2 * Math.PI, false);
-      ctx.fillStyle = colors[Math.floor(angle / (Math.PI / 3)) % colors.length];
-      ctx.fill();
-
-      angle += 0.02;
-      radius += 0.1;
-
-      requestAnimationFrame(drawSpiral);
+    function addToCart(productName, price) {
+      alert(`Added ${productName} to cart. Total: $${price}`);
+      // Here, you would typically add the selected product to the shopping cart on the server side.
     }
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-
-    resizeCanvas();
-    drawSpiral();
   </script>
+
 </body>
 </html>
