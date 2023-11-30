@@ -3,82 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cosmetics Store</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #f8f8f8;
+      overflow: hidden;
+      background-color: #001f3f; /* Цвет фона */
     }
 
-    header {
-      background-color: #333;
-      color: #fff;
-      text-align: center;
-      padding: 1em;
-    }
-
-    section {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      padding: 2em;
-    }
-
-    .product {
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin: 1em;
-      padding: 1em;
-      text-align: center;
-    }
-
-    footer {
-      background-color: #333;
-      color: #fff;
-      text-align: center;
-      padding: 1em;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
+    canvas {
+      display: block;
     }
   </style>
+  <title>Анимированная елка</title>
 </head>
 <body>
-
-  <header>
-    <h1>Cosmetics Store</h1>
-  </header>
-
-  <section id="products">
-    <div class="product">
-      <img src="product1.jpg" alt="Product 1">
-      <h2>Lipstick</h2>
-      <p>High-quality lipstick for a vibrant look.</p>
-      <button onclick="addToCart('Lipstick', 15.99)">Add to Cart</button>
-    </div>
-
-    <div class="product">
-      <img src="product2.jpg" alt="Product 2">
-      <h2>Mascara</h2>
-      <p>Volume-boosting mascara for stunning lashes.</p>
-      <button onclick="addToCart('Mascara', 12.99)">Add to Cart</button>
-    </div>
-
-    <!-- Add more product divs as needed -->
-  </section>
-
-  <footer>
-    <p>&copy; 2023 Cosmetics Store</p>
-  </footer>
+  <canvas id="christmasTree"></canvas>
 
   <script>
-    function addToCart(productName, price) {
-      alert(`Added ${productName} to cart. Total: $${price}`);
-      // Here, you would typically add the selected product to the shopping cart on the server side.
-    }
-  </script>
+    const canvas = document.getElementById('christmasTree');
+    const ctx = canvas.getContext('2d');
+    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00']; // Цвета для игрушек
 
+    function drawChristmasTree() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Рисуем ствол елки
+      ctx.fillStyle = '#8B4513'; // Коричневый цвет для ствола
+      ctx.fillRect(canvas.width / 2 - 20, canvas.height - 100, 40, 100);
+
+      // Рисуем треугольник для верхней части елки
+      ctx.fillStyle = '#008000'; // Зеленый цвет для хвои
+      ctx.beginPath();
+      ctx.moveTo(canvas.width / 2, canvas.height - 100);
+      ctx.lineTo(canvas.width / 2 - 40, canvas.height);
+      ctx.lineTo(canvas.width / 2 + 40, canvas.height);
+      ctx.closePath();
+      ctx.fill();
+
+      // Рисуем игрушки на елке
+      drawOrnaments();
+    }
+
+    function drawOrnaments() {
+      for (let i = 0; i < 5; i++) {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * (canvas.height - 100);
+        const size = Math.random() * 10 + 5;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
+
+    function animate() {
+      drawChristmasTree();
+      requestAnimationFrame(animate);
+    }
+
+    // Начинаем анимацию
+    animate();
+  </script>
 </body>
 </html>
