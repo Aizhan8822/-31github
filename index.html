@@ -3,68 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bubbles Animation</title>
   <style>
     body {
       margin: 0;
       overflow: hidden;
-      background-color: #001f3f; /* Цвет фона */
     }
-
     canvas {
       display: block;
     }
   </style>
-  <title>Анимированная елка</title>
 </head>
 <body>
-  <canvas id="christmasTree"></canvas>
+  <canvas id="bubblesCanvas"></canvas>
 
   <script>
-    const canvas = document.getElementById('christmasTree');
+    const canvas = document.getElementById('bubblesCanvas');
     const ctx = canvas.getContext('2d');
-    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00']; // Цвета для игрушек
 
-    function drawChristmasTree() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-      // Рисуем ствол елки
-      ctx.fillStyle = '#8B4513'; // Коричневый цвет для ствола
-      ctx.fillRect(canvas.width / 2 - 20, canvas.height - 100, 40, 100);
+    class Bubble {
+      constructor(x, y, radius, color) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.velocity = {
+          x: (Math.random() - 0.5) * 2, // Random horizontal velocity
+          y: Math.random() * 2 // Random vertical velocity
+        };
+      }
 
-      // Рисуем треугольник для верхней части елки
-      ctx.fillStyle = '#008000'; // Зеленый цвет для хвои
-      ctx.beginPath();
-      ctx.moveTo(canvas.width / 2, canvas.height - 100);
-      ctx.lineTo(canvas.width / 2 - 40, canvas.height);
-      ctx.lineTo(canvas.width / 2 + 40, canvas.height);
-      ctx.closePath();
-      ctx.fill();
+      update() {
+        this.x += this.velocity.x;
+        this.y += this.velocity.y;
 
-      // Рисуем игрушки на елке
-      drawOrnaments();
+        // Bounce off the walls
+        if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
+          this.velocity.x = -this.velocity.x;
+        }
+
+        if (this.y - this.radius <= 0 || this.y + this.radius >= canvas.height) {
+          this.velocity.y = -this.velocity.y;
+        }
+
+        this.draw();
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
+      }
     }
 
-    function drawOrnaments() {
-      for (let i = 0; i < 5; i++) {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * (canvas.height - 100);
-        const size = Math.random() * 10 + 5;
-        const color = colors[Math.floor(Math.random() * colors.length)];
+    const bubbles = [];
 
-        ctx.fillStyle = color;
-        ctx.beginPath();
-        ctx.arc(x, y, size, 0, Math.PI * 2);
-        ctx.closePath();
-        ctx.fill();
+    function createBubbles() {
+      for (let i = 0; i < 50; i++) {
+        const radius = Math.random() * 20 + 10; // Random radius between 10 and 30
+        const x = Math.random() * (canvas.width - radius * 2) + radius;
+        const y = Math.random() * (canvas.height - radius * 2) + radius;
+        const color = `rgba(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255},0.8)`;
+
+        bubbles.push(new Bubble(x, y, radius, color));
       }
     }
 
     function animate() {
-      drawChristmasTree();
       requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (const bubble of bubbles) {
+        bubble.update();
+      }
     }
 
-    // Начинаем анимацию
+    createBubbles();
     animate();
   </script>
 </body>
