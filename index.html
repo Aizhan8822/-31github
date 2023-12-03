@@ -1,82 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Pinterest-like Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
 
-    canvas {
-      display: block;
-    }
-  </style>
-  <title>Бесконечный фейерверк на JavaScript</title>
+        #gallery {
+            column-count: 3;
+            column-gap: 16px;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .pin {
+            break-inside: avoid-column;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .pin img {
+            max-width: 100%;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
-  <canvas id="fireworksCanvas"></canvas>
-  <script>
-    const canvas = document.getElementById('fireworksCanvas');
-    const ctx = canvas.getContext('2d');
-    const fireworks = [];
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+<div id="gallery"></div>
 
-    function random(min, max) {
-      return Math.random() * (max - min) + min;
-    }
+<script>
+    // Пример данных - изображения
+    const images = [
+        'https://via.placeholder.com/400x600',
+        'https://via.placeholder.com/400x800',
+        'https://via.placeholder.com/400x700',
+        'https://via.placeholder.com/400x500',
+        'https://via.placeholder.com/400x900',
+        'https://via.placeholder.com/400x750',
+        // Добавьте свои изображения здесь
+    ];
 
-    function Firework() {
-      this.x = random(0, canvas.width);
-      this.y = canvas.height;
-      this.dx = random(-2, 2);
-      this.dy = random(-5, -1);
-      this.radius = random(2, 4);
-      this.color = `rgb(${Math.floor(random(0, 255))},${Math.floor(random(0, 255))},${Math.floor(random(0, 255))})`;
-    }
+    // Создание элементов и добавление их в галерею
+    const gallery = document.getElementById('gallery');
 
-    Firework.prototype.draw = function() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = this.color;
-      ctx.fill();
-    };
+    images.forEach((imageUrl) => {
+        const pin = document.createElement('div');
+        pin.className = 'pin';
 
-    Firework.prototype.update = function() {
-      this.x += this.dx;
-      this.y += this.dy;
-      this.dy += 0.1;
-      this.radius *= 0.98;
-    };
+        const img = document.createElement('img');
+        img.src = imageUrl;
 
-    function createFirework() {
-      const firework = new Firework();
-      fireworks.push(firework);
-    }
+        pin.appendChild(img);
+        gallery.appendChild(pin);
+    });
+</script>
 
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      if (Math.random() < 0.03) {
-        createFirework();
-      }
-
-      for (let i = fireworks.length - 1; i >= 0; i--) {
-        fireworks[i].update();
-        fireworks[i].draw();
-
-        if (fireworks[i].radius < 1) {
-          fireworks.splice(i, 1);
-        }
-      }
-
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-  </script>
 </body>
 </html>
