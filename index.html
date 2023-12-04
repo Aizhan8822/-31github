@@ -3,67 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Pinterest-like Gallery</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-
-        #gallery {
-            column-count: 3;
-            column-gap: 16px;
-            max-width: 1200px;
-            margin: 20px auto;
-        }
-
-        .pin {
-            break-inside: avoid-column;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 16px;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .pin img {
-            max-width: 100%;
-            border-bottom: 1px solid #ddd;
-        }
-    </style>
+    <title>Логистическое приложение</title>
+    <!-- Подключение стилей и библиотек -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<div id="gallery"></div>
-
-<script>
-    // Пример данных - изображения
-    const images = [
-        'https://via.placeholder.com/400x600',
-        'https://via.placeholder.com/400x800',
-        'https://via.placeholder.com/400x700',
-        'https://via.placeholder.com/400x500',
-        'https://via.placeholder.com/400x900',
-        'https://via.placeholder.com/400x750',
-        // Добавьте свои изображения здесь
-    ];
-
-    // Создание элементов и добавление их в галерею
-    const gallery = document.getElementById('gallery');
-
-    images.forEach((imageUrl) => {
-        const pin = document.createElement('div');
-        pin.className = 'pin';
-
-        const img = document.createElement('img');
-        img.src = imageUrl;
-
-        pin.appendChild(img);
-        gallery.appendChild(pin);
-    });
-</script>
-
+    <!-- Главный контейнер для отображения данных -->
+    <div id="app"></div>
+    
+    <!-- Подключение скриптов -->
+    <script src="app.js"></script>
 </body>
 </html>
