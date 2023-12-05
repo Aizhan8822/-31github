@@ -1,17 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Логистическое приложение</title>
-    <!-- Подключение стилей и библиотек -->
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Будильник</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+
+    #timeInput {
+      font-size: 20px;
+      padding: 10px;
+    }
+
+    #startButton, #stopButton {
+      font-size: 16px;
+      padding: 8px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-    <!-- Главный контейнер для отображения данных -->
-    <div id="app"></div>
-    
-    <!-- Подключение скриптов -->
-    <script src="app.js"></script>
+  <h1>Будильник</h1>
+
+  <label for="timeInput">Установите время:</label>
+  <input type="time" id="timeInput">
+
+  <br>
+
+  <button id="startButton">Старт</button>
+  <button id="stopButton">Стоп</button>
+
+  <script>
+    let alarm;
+
+    document.getElementById('startButton').addEventListener('click', function() {
+      const timeInput = document.getElementById('timeInput').value;
+
+      if (!timeInput) {
+        alert('Пожалуйста, укажите время.');
+        return;
+      }
+
+      const currentTime = new Date();
+      const selectedTime = new Date(currentTime.toDateString() + ' ' + timeInput);
+
+      if (selectedTime <= currentTime) {
+        // Если выбранное время уже прошло сегодня, устанавливаем будильник на следующий день
+        selectedTime.setDate(selectedTime.getDate() + 1);
+      }
+
+      const timeDiff = selectedTime - currentTime;
+
+      alarm = setTimeout(function() {
+        alert('Пора вставать!');
+      }, timeDiff);
+    });
+
+    document.getElementById('stopButton').addEventListener('click', function() {
+      clearTimeout(alarm);
+      alert('Будильник отменен.');
+    });
+  </script>
 </body>
 </html>
